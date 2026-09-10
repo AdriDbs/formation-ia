@@ -57,12 +57,11 @@ export async function getSession(): Promise<SessionPayload | null> {
 // --- Session admin : compte unique, séparée de la session participant. ---
 
 export type AdminSessionPayload = {
-  email: string;
   scope: "admin";
 };
 
-export async function createAdminSession(email: string) {
-  const token = await new SignJWT({ email, scope: "admin" })
+export async function createAdminSession() {
+  const token = await new SignJWT({ scope: "admin" })
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
     .setExpirationTime(`${ADMIN_SESSION_DURATION_SECONDS}s`)

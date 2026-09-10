@@ -38,17 +38,10 @@ export default function AdminLoginPage() {
 
         <form action={formAction} className="flex flex-col gap-4">
           <div className="flex flex-col gap-1.5">
-            <label htmlFor="email" className="text-xs font-semibold uppercase tracking-wide">
-              {t("emailLabel")}
-            </label>
-            <Input id="email" name="email" type="email" required autoFocus />
-          </div>
-
-          <div className="flex flex-col gap-1.5">
             <label htmlFor="password" className="text-xs font-semibold uppercase tracking-wide">
               {t("passwordLabel")}
             </label>
-            <Input id="password" name="password" type="password" required />
+            <Input id="password" name="password" type="password" required autoFocus />
           </div>
 
           {state?.error && (

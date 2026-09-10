@@ -165,18 +165,17 @@ async function seed() {
     }))
   );
 
-  const adminEmail = "adrien.dub2000@gmail.com";
   const [existingAdmin] = await db.select().from(adminAccount).limit(1);
 
   if (!existingAdmin) {
     const tempPassword = randomBytes(9).toString("base64url");
     const passwordHash = await hashPassword(tempPassword);
-    await db.insert(adminAccount).values({ email: adminEmail, passwordHash });
-    console.log(`Compte admin créé : ${adminEmail}`);
+    await db.insert(adminAccount).values({ passwordHash });
+    console.log("Accès admin créé.");
     console.log(`Mot de passe temporaire : ${tempPassword}`);
     console.log("→ à changer depuis /admin/settings après la première connexion.");
   } else {
-    console.log(`Compte admin déjà existant : ${existingAdmin.email}`);
+    console.log("Accès admin déjà configuré (mot de passe conservé).");
   }
 
   console.log("Seed terminé.");

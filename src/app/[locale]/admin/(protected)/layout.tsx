@@ -12,7 +12,7 @@ export default async function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await requireAdmin();
+  await requireAdmin();
   const t = await getTranslations();
 
   const navItems: NavItem[] = [
@@ -33,7 +33,6 @@ export default async function AdminLayout({
       navItems={navItems}
       footer={
         <div className="flex flex-col gap-3">
-          <p className="truncate px-1 text-xs text-white/60">{session.email}</p>
           <Link
             href="/dashboard"
             className="text-center text-xs font-semibold uppercase tracking-wide text-white/70 hover:text-white"

@@ -120,8 +120,7 @@
   },
   "adminLogin": {
     "title": "Admin area",
-    "subtitle": "Restricted access — sign in with e-mail and password.",
-    "emailLabel": "E-mail address",
+    "subtitle": "Restricted access — password required.",
     "passwordLabel": "Password",
     "submit": "Sign in",
     "submitPending": "Signing in…",

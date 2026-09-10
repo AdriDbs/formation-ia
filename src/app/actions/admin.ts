@@ -16,7 +16,7 @@ export async function addAllowedEmailAction(
   _prevState: AddEmailState,
   formData: FormData
 ): Promise<AddEmailState> {
-  const admin = await requireAdmin();
+  await requireAdmin();
   const locale = await getLocale();
 
   const email = emailSchema.safeParse(formData.get("email"));
@@ -24,7 +24,7 @@ export async function addAllowedEmailAction(
 
   await db
     .insert(allowedEmails)
-    .values({ email: email.data, addedBy: admin.email })
+    .values({ email: email.data, addedBy: "admin" })
     .onConflictDoNothing();
 
   revalidatePath(`/${locale}/admin/emails`);

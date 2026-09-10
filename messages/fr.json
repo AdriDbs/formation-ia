@@ -120,8 +120,7 @@
   },
   "adminLogin": {
     "title": "Espace admin",
-    "subtitle": "Accès réservé — connexion par e-mail et mot de passe.",
-    "emailLabel": "Adresse e-mail",
+    "subtitle": "Accès réservé — mot de passe requis.",
     "passwordLabel": "Mot de passe",
     "submit": "Se connecter",
     "submitPending": "Connexion…",

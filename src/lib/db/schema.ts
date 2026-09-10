@@ -50,11 +50,11 @@ export const users = pgTable(
   (table) => [uniqueIndex("users_email_idx").on(table.email)]
 );
 
-// Compte admin unique et global (pas de whitelist, pas de rôles) : e-mail +
-// mot de passe hashé. Une seule ligne existe jamais dans cette table.
+// Accès admin unique, global et impersonnel : un seul mot de passe partagé,
+// pas d'e-mail ni d'identité associée. Une seule ligne existe jamais dans
+// cette table.
 export const adminAccount = pgTable("admin_account", {
   id: serial("id").primaryKey(),
-  email: varchar("email", { length: 255 }).notNull(),
   passwordHash: text("password_hash").notNull(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });

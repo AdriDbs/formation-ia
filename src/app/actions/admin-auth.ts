@@ -10,8 +10,6 @@ import { requireAdmin } from "@/lib/auth/guards";
 import { redirect } from "next/navigation";
 import { getLocale } from "next-intl/server";
 
-const emailSchema = z.string().trim().toLowerCase().email();
-
 export type AdminLoginState = { error?: "invalid_credentials" } | null;
 
 export async function adminLoginAction(
@@ -19,15 +17,14 @@ export async function adminLoginAction(
   formData: FormData
 ): Promise<AdminLoginState> {
   const locale = await getLocale();
-  const email = emailSchema.safeParse(formData.get("email"));
   const password = z.string().min(1).safeParse(formData.get("password"));
 
-  if (!email.success || !password.success) {
+  if (!password.success) {
     return { error: "invalid_credentials" };
   }
 
   const [account] = await db.select().from(adminAccount).limit(1);
-  if (!account || account.email !== email.data) {
+  if (!account) {
     return { error: "invalid_credentials" };
   }
 
@@ -36,7 +33,7 @@ export async function adminLoginAction(
     return { error: "invalid_credentials" };
   }
 
-  await createAdminSession(account.email);
+  await createAdminSession();
   redirect(`/${locale}/admin`);
 }
 
@@ -55,14 +52,14 @@ export async function changeAdminPasswordAction(
   _prevState: ChangePasswordState,
   formData: FormData
 ): Promise<ChangePasswordState> {
-  const session = await requireAdmin();
+  await requireAdmin();
 
   const current = String(formData.get("currentPassword") ?? "");
   const next = String(formData.get("newPassword") ?? "");
   const confirm = String(formData.get("confirmPassword") ?? "");
 
   const [account] = await db.select().from(adminAccount).limit(1);
-  if (!account || account.email !== session.email) {
+  if (!account) {
     return { error: "wrong_current" };
   }
 
