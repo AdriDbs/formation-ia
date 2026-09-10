@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { db } from "@/lib/db";
 import { modules, moduleProgress } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
@@ -7,23 +6,12 @@ import { computeDayStatuses, progressPercent } from "@/lib/modules/progress";
 import { ProgressBar } from "@/components/ui/progress-bar";
 import { Card } from "@/components/ui/card";
 import { StatusPill } from "@/components/ui/status-pill";
-
-const LEVEL_LABELS: Record<string, string> = {
-  novice: "Novice",
-  debutant: "Débutant",
-  intermediaire: "Intermédiaire",
-  expert: "Expert",
-};
-
-const TYPE_LABELS: Record<string, string> = {
-  theorique: "Théorique",
-  pratique: "Pratique",
-  prerequis: "Prérequis",
-  pause: "Pause",
-};
+import { Link } from "@/i18n/navigation";
+import { getTranslations } from "next-intl/server";
 
 export default async function DashboardPage() {
   const user = await requireOnboardedParticipant();
+  const t = await getTranslations();
 
   const allModules = await db.select().from(modules);
   const completedRows = await db
@@ -45,19 +33,21 @@ export default async function DashboardPage() {
     <div className="flex flex-col gap-10">
       <section className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-bold">Bonjour {user.name}</h1>
+          <h1 className="text-2xl font-bold">
+            {t("dashboard.greeting", { name: user.name ?? "" })}
+          </h1>
           <p className="text-sm text-muted">
-            {user.team} · Niveau {LEVEL_LABELS[user.level ?? "novice"]}
+            {user.team} · {t(`levels.${user.level ?? "novice"}`)}
           </p>
         </div>
         <div className="flex gap-6">
-          <Metric label="Jour 1" percent={progressPercent(day1)} />
-          <Metric label="Jour 2" percent={progressPercent(day2)} />
+          <Metric label={t("dashboard.day1")} percent={progressPercent(day1)} />
+          <Metric label={t("dashboard.day2")} percent={progressPercent(day2)} />
         </div>
       </section>
 
-      <DayBlock title="Jour 1" dayModules={day1} />
-      <DayBlock title="Jour 2" dayModules={day2} />
+      <DayBlock title={t("dashboard.day1")} dayModules={day1} />
+      <DayBlock title={t("dashboard.day2")} dayModules={day2} />
     </div>
   );
 }
@@ -76,7 +66,7 @@ function Metric({ label, percent }: { label: string; percent: number }) {
   );
 }
 
-function DayBlock({
+async function DayBlock({
   title,
   dayModules,
 }: {
@@ -84,6 +74,7 @@ function DayBlock({
   dayModules: ReturnType<typeof computeDayStatuses>;
 }) {
   if (dayModules.length === 0) return null;
+  const t = await getTranslations();
 
   return (
     <section>
@@ -109,7 +100,7 @@ function DayBlock({
                   <div className="mb-1 flex items-center gap-2">
                     {!isPause && (
                       <span className="text-xs font-semibold uppercase tracking-wide text-taupe">
-                        {TYPE_LABELS[module.type]}
+                        {t(`types.${module.type}`)}
                       </span>
                     )}
                   </div>

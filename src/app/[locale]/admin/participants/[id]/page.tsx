@@ -1,25 +1,12 @@
 import { notFound } from "next/navigation";
-import Link from "next/link";
 import { db } from "@/lib/db";
 import { users, modules, moduleProgress } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import { computeDayStatuses } from "@/lib/modules/progress";
 import { Card } from "@/components/ui/card";
 import { StatusPill } from "@/components/ui/status-pill";
-
-const LEVEL_LABELS: Record<string, string> = {
-  novice: "Novice",
-  debutant: "Débutant",
-  intermediaire: "Intermédiaire",
-  expert: "Expert",
-};
-
-const TYPE_LABELS: Record<string, string> = {
-  theorique: "Théorique",
-  pratique: "Pratique",
-  prerequis: "Prérequis",
-  pause: "Pause",
-};
+import { Link } from "@/i18n/navigation";
+import { getTranslations } from "next-intl/server";
 
 export default async function ParticipantDetailPage({
   params,
@@ -29,6 +16,8 @@ export default async function ParticipantDetailPage({
   const { id } = await params;
   const userId = Number(id);
   if (!Number.isInteger(userId)) notFound();
+
+  const t = await getTranslations();
 
   const [participant] = await db.select().from(users).where(eq(users.id, userId));
   if (!participant) notFound();
@@ -49,24 +38,24 @@ export default async function ParticipantDetailPage({
         href="/admin"
         className="text-xs font-semibold uppercase tracking-wide text-muted hover:text-ink"
       >
-        ← Retour à la liste
+        {t("common.backToList")}
       </Link>
 
       <div>
         <h1 className="text-2xl font-bold">{participant.name ?? participant.email}</h1>
         <p className="text-sm text-muted">
-          {participant.email} · {participant.team ?? "Équipe non renseignée"} · Niveau{" "}
-          {participant.level ? LEVEL_LABELS[participant.level] : "—"}
+          {participant.email} · {participant.team ?? "—"} ·{" "}
+          {participant.level ? t(`levels.${participant.level}`) : "—"}
         </p>
       </div>
 
-      <ModuleTable title="Jour 1" dayModules={day1} />
-      <ModuleTable title="Jour 2" dayModules={day2} />
+      <ModuleTable title={t("dashboard.day1")} dayModules={day1} />
+      <ModuleTable title={t("dashboard.day2")} dayModules={day2} />
     </div>
   );
 }
 
-function ModuleTable({
+async function ModuleTable({
   title,
   dayModules,
 }: {
@@ -74,6 +63,7 @@ function ModuleTable({
   dayModules: ReturnType<typeof computeDayStatuses>;
 }) {
   if (dayModules.length === 0) return null;
+  const t = await getTranslations();
 
   return (
     <section>
@@ -82,9 +72,9 @@ function ModuleTable({
         <table className="w-full text-left text-sm">
           <thead>
             <tr className="border-b border-border text-xs font-semibold uppercase tracking-wide text-muted">
-              <th className="px-6 py-3">Module</th>
-              <th className="px-6 py-3">Type</th>
-              <th className="px-6 py-3">Statut</th>
+              <th className="px-6 py-3">{t("admin.table.module")}</th>
+              <th className="px-6 py-3">{t("admin.table.type")}</th>
+              <th className="px-6 py-3">{t("admin.table.status")}</th>
             </tr>
           </thead>
           <tbody>
@@ -93,7 +83,7 @@ function ModuleTable({
               .map((m) => (
                 <tr key={m.id} className="border-b border-border last:border-0">
                   <td className="px-6 py-3 font-medium">{m.title}</td>
-                  <td className="px-6 py-3 text-muted">{TYPE_LABELS[m.type]}</td>
+                  <td className="px-6 py-3 text-muted">{t(`types.${m.type}`)}</td>
                   <td className="px-6 py-3">
                     {m.type === "prerequis" ? (
                       <span className="text-xs text-muted">—</span>

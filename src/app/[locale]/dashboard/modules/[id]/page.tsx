@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import Link from "next/link";
 import { db } from "@/lib/db";
 import { modules, moduleProgress } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
@@ -7,14 +6,9 @@ import { requireOnboardedParticipant } from "@/lib/auth/guards";
 import { computeDayStatuses } from "@/lib/modules/progress";
 import { Card } from "@/components/ui/card";
 import { StatusPill } from "@/components/ui/status-pill";
+import { Link } from "@/i18n/navigation";
+import { getTranslations } from "next-intl/server";
 import { ModuleCompletionForm } from "./completion-form";
-
-const TYPE_LABELS: Record<string, string> = {
-  theorique: "Théorique",
-  pratique: "Pratique",
-  prerequis: "Prérequis",
-  pause: "Pause",
-};
 
 export default async function ModulePage({
   params,
@@ -26,6 +20,7 @@ export default async function ModulePage({
   if (!Number.isInteger(moduleId)) notFound();
 
   const user = await requireOnboardedParticipant();
+  const t = await getTranslations();
 
   const [module] = await db.select().from(modules).where(eq(modules.id, moduleId));
   if (!module) notFound();
@@ -48,13 +43,13 @@ export default async function ModulePage({
         href="/dashboard"
         className="text-xs font-semibold uppercase tracking-wide text-muted hover:text-ink"
       >
-        ← Retour au tableau de bord
+        {t("common.backToDashboard")}
       </Link>
 
       <Card>
         <div className="mb-4 flex items-center justify-between gap-4">
           <span className="text-xs font-semibold uppercase tracking-wide text-taupe">
-            Jour {module.day} · {TYPE_LABELS[module.type]}
+            {t(`dashboard.day${module.day}`)} · {t(`types.${module.type}`)}
           </span>
           <StatusPill status={current.status} />
         </div>
@@ -69,11 +64,9 @@ export default async function ModulePage({
 
         <div className="border border-dashed border-border bg-surface-muted px-6 py-10 text-center">
           <p className="text-sm font-semibold uppercase tracking-wide text-muted">
-            Contenu en construction
+            {t("module.underConstructionTitle")}
           </p>
-          <p className="mt-1 text-sm text-muted">
-            Le contenu détaillé de ce module sera ajouté prochainement.
-          </p>
+          <p className="mt-1 text-sm text-muted">{t("module.underConstructionBody")}</p>
         </div>
 
         {module.type !== "prerequis" && (

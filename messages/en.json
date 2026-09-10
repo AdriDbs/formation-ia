@@ -1,0 +1,103 @@
+{
+  "common": {
+    "brand": "AI Training",
+    "logout": "Log out",
+    "backToDashboard": "← Back to dashboard",
+    "backToList": "← Back to list"
+  },
+  "languageSwitcher": {
+    "label": "Language"
+  },
+  "nav": {
+    "adminSpace": "Admin area",
+    "participantView": "Participant view",
+    "participants": "Participants",
+    "access": "Access"
+  },
+  "login": {
+    "title": "Sign in",
+    "subtitle": "Enter your work e-mail address. If it's authorized, you'll get straight into the platform.",
+    "emailLabel": "E-mail address",
+    "emailPlaceholder": "first.last@company.com",
+    "submit": "Sign in",
+    "submitPending": "Signing in…",
+    "errors": {
+      "invalid_email": "Invalid e-mail address.",
+      "not_allowed": "This address isn't authorized. Ask an administrator to add you."
+    }
+  },
+  "onboarding": {
+    "title": "Your profile",
+    "subtitle": "This information lets us track your progress.",
+    "nameLabel": "Full name",
+    "namePlaceholder": "Jane Doe",
+    "teamLabel": "Team",
+    "teamPlaceholder": "e.g. Consulting, Data, Tech…",
+    "levelLabel": "AI level",
+    "submit": "Start the training",
+    "submitPending": "Saving…",
+    "errors": {
+      "invalid_form": "Invalid form."
+    }
+  },
+  "dashboard": {
+    "greeting": "Hello {name}",
+    "day1": "Day 1",
+    "day2": "Day 2"
+  },
+  "module": {
+    "underConstructionTitle": "Content under construction",
+    "underConstructionBody": "The detailed content of this module will be added soon.",
+    "markComplete": "Mark as completed",
+    "markIncomplete": "Mark as not completed",
+    "updating": "Updating…"
+  },
+  "admin": {
+    "participantsTitle": "Participants",
+    "participantsCount": "{count, plural, =0 {No participants} one {# participant} other {# participants}}",
+    "noParticipants": "No participant has completed onboarding yet.",
+    "table": {
+      "name": "Name",
+      "team": "Team",
+      "level": "Level",
+      "day1": "Day 1",
+      "day2": "Day 2",
+      "type": "Type",
+      "status": "Status",
+      "module": "Module",
+      "email": "E-mail",
+      "role": "Role",
+      "addedBy": "Added by"
+    },
+    "emailsTitle": "Platform access",
+    "emailsSubtitle": "Only the addresses listed here can sign in to the platform.",
+    "addEmailTitle": "Add an address",
+    "addEmailSubmit": "Add",
+    "addEmailPending": "Adding…",
+    "remove": "Remove",
+    "removeConfirm": "Remove this address from the list of authorized accounts?",
+    "roleParticipant": "Participant",
+    "roleAdmin": "Administrator",
+    "errors": {
+      "invalid_email": "Invalid e-mail address.",
+      "invalid_role": "Invalid role."
+    }
+  },
+  "levels": {
+    "novice": "Novice",
+    "debutant": "Beginner",
+    "intermediaire": "Intermediate",
+    "expert": "Expert"
+  },
+  "types": {
+    "theorique": "Theory",
+    "pratique": "Practice",
+    "prerequis": "Prerequisite",
+    "pause": "Break"
+  },
+  "status": {
+    "locked": "Locked",
+    "available": "Available",
+    "completed": "Completed"
+  }
+}

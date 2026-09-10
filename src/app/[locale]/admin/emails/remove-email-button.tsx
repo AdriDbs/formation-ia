@@ -1,9 +1,11 @@
 "use client";
 
 import { useTransition } from "react";
+import { useTranslations } from "next-intl";
 import { removeAllowedEmailAction } from "@/app/actions/admin";
 
 export function RemoveEmailButton({ id }: { id: number }) {
+  const t = useTranslations("admin");
   const [pending, startTransition] = useTransition();
 
   return (
@@ -11,13 +13,13 @@ export function RemoveEmailButton({ id }: { id: number }) {
       type="button"
       disabled={pending}
       onClick={() => {
-        if (confirm("Retirer cette adresse de la liste des accès autorisés ?")) {
+        if (confirm(t("removeConfirm"))) {
           startTransition(() => removeAllowedEmailAction(id));
         }
       }}
       className="text-xs font-semibold uppercase tracking-wide text-accent hover:underline disabled:opacity-50"
     >
-      Retirer
+      {t("remove")}
     </button>
   );
 }

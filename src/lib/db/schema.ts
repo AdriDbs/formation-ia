@@ -51,16 +51,6 @@ export const users = pgTable(
   (table) => [uniqueIndex("users_email_idx").on(table.email)]
 );
 
-export const otpCodes = pgTable("otp_codes", {
-  id: serial("id").primaryKey(),
-  email: varchar("email", { length: 255 }).notNull(),
-  codeHash: text("code_hash").notNull(),
-  expiresAt: timestamp("expires_at").notNull(),
-  consumedAt: timestamp("consumed_at"),
-  attempts: integer("attempts").notNull().default(0),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-});
-
 export const modules = pgTable("modules", {
   id: serial("id").primaryKey(),
   day: integer("day").notNull(),

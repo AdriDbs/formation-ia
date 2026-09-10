@@ -1,7 +1,8 @@
 "use client";
 
 import { useTransition } from "react";
-import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { useRouter } from "@/i18n/navigation";
 import {
   markModuleCompleteAction,
   unmarkModuleCompleteAction,
@@ -15,6 +16,7 @@ export function ModuleCompletionForm({
   moduleId: number;
   completed: boolean;
 }) {
+  const t = useTranslations("module");
   const router = useRouter();
   const [pending, startTransition] = useTransition();
 
@@ -34,10 +36,10 @@ export function ModuleCompletionForm({
       }
     >
       {pending
-        ? "Mise à jour…"
+        ? t("updating")
         : completed
-          ? "Marquer comme non terminé"
-          : "Marquer comme terminé"}
+          ? t("markIncomplete")
+          : t("markComplete")}
     </Button>
   );
 }

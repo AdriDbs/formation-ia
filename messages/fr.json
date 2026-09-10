@@ -1,0 +1,103 @@
+{
+  "common": {
+    "brand": "Formation IA",
+    "logout": "Déconnexion",
+    "backToDashboard": "← Retour au tableau de bord",
+    "backToList": "← Retour à la liste"
+  },
+  "languageSwitcher": {
+    "label": "Langue"
+  },
+  "nav": {
+    "adminSpace": "Espace admin",
+    "participantView": "Vue participant",
+    "participants": "Participants",
+    "access": "Accès"
+  },
+  "login": {
+    "title": "Connexion",
+    "subtitle": "Saisissez votre adresse e-mail professionnelle. Si elle est autorisée, vous accédez directement à la plateforme.",
+    "emailLabel": "Adresse e-mail",
+    "emailPlaceholder": "prenom.nom@entreprise.com",
+    "submit": "Se connecter",
+    "submitPending": "Connexion…",
+    "errors": {
+      "invalid_email": "Adresse e-mail invalide.",
+      "not_allowed": "Cette adresse n'est pas autorisée. Contactez un administrateur pour être ajouté."
+    }
+  },
+  "onboarding": {
+    "title": "Votre profil",
+    "subtitle": "Ces informations nous permettent de suivre votre progression.",
+    "nameLabel": "Nom complet",
+    "namePlaceholder": "Jeanne Dupont",
+    "teamLabel": "Équipe",
+    "teamPlaceholder": "Ex: Consulting, Data, Tech…",
+    "levelLabel": "Niveau IA",
+    "submit": "Commencer la formation",
+    "submitPending": "Enregistrement…",
+    "errors": {
+      "invalid_form": "Formulaire invalide."
+    }
+  },
+  "dashboard": {
+    "greeting": "Bonjour {name}",
+    "day1": "Jour 1",
+    "day2": "Jour 2"
+  },
+  "module": {
+    "underConstructionTitle": "Contenu en construction",
+    "underConstructionBody": "Le contenu détaillé de ce module sera ajouté prochainement.",
+    "markComplete": "Marquer comme terminé",
+    "markIncomplete": "Marquer comme non terminé",
+    "updating": "Mise à jour…"
+  },
+  "admin": {
+    "participantsTitle": "Participants",
+    "participantsCount": "{count, plural, =0 {Aucun participant} one {# participant} other {# participants}}",
+    "noParticipants": "Aucun participant n'a encore terminé son onboarding.",
+    "table": {
+      "name": "Nom",
+      "team": "Équipe",
+      "level": "Niveau",
+      "day1": "Jour 1",
+      "day2": "Jour 2",
+      "type": "Type",
+      "status": "Statut",
+      "module": "Module",
+      "email": "E-mail",
+      "role": "Rôle",
+      "addedBy": "Ajouté par"
+    },
+    "emailsTitle": "Accès à la plateforme",
+    "emailsSubtitle": "Seules les adresses listées ici peuvent se connecter à la plateforme.",
+    "addEmailTitle": "Ajouter une adresse",
+    "addEmailSubmit": "Ajouter",
+    "addEmailPending": "Ajout…",
+    "remove": "Retirer",
+    "removeConfirm": "Retirer cette adresse de la liste des accès autorisés ?",
+    "roleParticipant": "Participant",
+    "roleAdmin": "Administrateur",
+    "errors": {
+      "invalid_email": "Adresse e-mail invalide.",
+      "invalid_role": "Rôle invalide."
+    }
+  },
+  "levels": {
+    "novice": "Novice",
+    "debutant": "Débutant",
+    "intermediaire": "Intermédiaire",
+    "expert": "Expert"
+  },
+  "types": {
+    "theorique": "Théorique",
+    "pratique": "Pratique",
+    "prerequis": "Prérequis",
+    "pause": "Pause"
+  },
+  "status": {
+    "locked": "Verrouillé",
+    "available": "Disponible",
+    "completed": "Terminé"
+  }
+}

@@ -1,18 +1,14 @@
-import Link from "next/link";
 import { db } from "@/lib/db";
 import { users, modules, moduleProgress } from "@/lib/db/schema";
 import { computeDayStatuses, progressPercent } from "@/lib/modules/progress";
 import { ProgressBar } from "@/components/ui/progress-bar";
 import { Card } from "@/components/ui/card";
-
-const LEVEL_LABELS: Record<string, string> = {
-  novice: "Novice",
-  debutant: "Débutant",
-  intermediaire: "Intermédiaire",
-  expert: "Expert",
-};
+import { Link } from "@/i18n/navigation";
+import { getTranslations } from "next-intl/server";
 
 export default async function AdminPage() {
+  const t = await getTranslations();
+
   const [allUsers, allModules, allProgress] = await Promise.all([
     db.select().from(users),
     db.select().from(modules),
@@ -37,28 +33,26 @@ export default async function AdminPage() {
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h1 className="text-2xl font-bold">Participants</h1>
+        <h1 className="text-2xl font-bold">{t("admin.participantsTitle")}</h1>
         <p className="text-sm text-muted">
-          {participants.length} participant{participants.length > 1 ? "s" : ""}
+          {t("admin.participantsCount", { count: participants.length })}
         </p>
       </div>
 
       {participants.length === 0 ? (
         <Card>
-          <p className="text-sm text-muted">
-            Aucun participant n&apos;a encore terminé son onboarding.
-          </p>
+          <p className="text-sm text-muted">{t("admin.noParticipants")}</p>
         </Card>
       ) : (
         <Card className="overflow-x-auto p-0">
           <table className="w-full text-left text-sm">
             <thead>
               <tr className="border-b border-border text-xs font-semibold uppercase tracking-wide text-muted">
-                <th className="px-6 py-3">Nom</th>
-                <th className="px-6 py-3">Équipe</th>
-                <th className="px-6 py-3">Niveau</th>
-                <th className="px-6 py-3">Jour 1</th>
-                <th className="px-6 py-3">Jour 2</th>
+                <th className="px-6 py-3">{t("admin.table.name")}</th>
+                <th className="px-6 py-3">{t("admin.table.team")}</th>
+                <th className="px-6 py-3">{t("admin.table.level")}</th>
+                <th className="px-6 py-3">{t("admin.table.day1")}</th>
+                <th className="px-6 py-3">{t("admin.table.day2")}</th>
               </tr>
             </thead>
             <tbody>
@@ -74,7 +68,7 @@ export default async function AdminPage() {
                   </td>
                   <td className="px-6 py-3 text-muted">{user.team ?? "—"}</td>
                   <td className="px-6 py-3 text-muted">
-                    {user.level ? LEVEL_LABELS[user.level] : "—"}
+                    {user.level ? t(`levels.${user.level}`) : "—"}
                   </td>
                   <td className="px-6 py-3">
                     <div className="flex items-center gap-2">

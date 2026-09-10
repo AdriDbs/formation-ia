@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
+import { useTranslations } from "next-intl";
 import {
   completeOnboardingAction,
   type OnboardingState,
@@ -9,14 +10,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 
-const LEVELS = [
-  { value: "novice", label: "Novice" },
-  { value: "debutant", label: "Débutant" },
-  { value: "intermediaire", label: "Intermédiaire" },
-  { value: "expert", label: "Expert" },
-];
+const LEVELS = ["novice", "debutant", "intermediaire", "expert"] as const;
 
 export function OnboardingForm() {
+  const t = useTranslations("onboarding");
+  const tLevels = useTranslations("levels");
   const [state, formAction, pending] = useActionState<OnboardingState, FormData>(
     completeOnboardingAction,
     null
@@ -24,45 +22,43 @@ export function OnboardingForm() {
 
   return (
     <Card className="w-full max-w-md">
-      <h1 className="mb-1 text-xl font-bold">Votre profil</h1>
-      <p className="mb-6 text-sm text-muted">
-        Ces informations nous permettent de suivre votre progression.
-      </p>
+      <h1 className="mb-1 text-xl font-bold">{t("title")}</h1>
+      <p className="mb-6 text-sm text-muted">{t("subtitle")}</p>
 
       <form action={formAction} className="flex flex-col gap-5">
         <div className="flex flex-col gap-1.5">
           <label htmlFor="name" className="text-xs font-semibold uppercase tracking-wide">
-            Nom complet
+            {t("nameLabel")}
           </label>
-          <Input id="name" name="name" placeholder="Jeanne Dupont" required autoFocus />
+          <Input id="name" name="name" placeholder={t("namePlaceholder")} required autoFocus />
         </div>
 
         <div className="flex flex-col gap-1.5">
           <label htmlFor="team" className="text-xs font-semibold uppercase tracking-wide">
-            Équipe
+            {t("teamLabel")}
           </label>
-          <Input id="team" name="team" placeholder="Ex: Consulting, Data, Tech…" required />
+          <Input id="team" name="team" placeholder={t("teamPlaceholder")} required />
         </div>
 
         <fieldset className="flex flex-col gap-1.5">
           <legend className="mb-1 text-xs font-semibold uppercase tracking-wide">
-            Niveau IA
+            {t("levelLabel")}
           </legend>
           <div className="grid grid-cols-2 gap-2">
             {LEVELS.map((level, i) => (
               <label
-                key={level.value}
+                key={level}
                 className="flex cursor-pointer items-center gap-2 border-2 border-border px-3 py-2.5 text-sm has-[:checked]:border-ink has-[:checked]:bg-surface-muted"
               >
                 <input
                   type="radio"
                   name="level"
-                  value={level.value}
+                  value={level}
                   defaultChecked={i === 0}
                   className="accent-black"
                   required
                 />
-                {level.label}
+                {tLevels(level)}
               </label>
             ))}
           </div>
@@ -70,12 +66,12 @@ export function OnboardingForm() {
 
         {state?.error && (
           <p className="border border-accent bg-accent-soft px-3 py-2 text-sm text-ink">
-            {state.error}
+            {t(`errors.${state.error}`)}
           </p>
         )}
 
         <Button type="submit" disabled={pending} className="w-full">
-          {pending ? "Enregistrement…" : "Commencer la formation"}
+          {pending ? t("submitPending") : t("submit")}
         </Button>
       </form>
     </Card>

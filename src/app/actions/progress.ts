@@ -7,14 +7,16 @@ import { getSession } from "@/lib/auth/session";
 import { computeDayStatuses } from "@/lib/modules/progress";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import { getLocale } from "next-intl/server";
 
 export async function markModuleCompleteAction(moduleId: number) {
+  const locale = await getLocale();
   const session = await getSession();
-  if (!session) redirect("/login");
+  if (!session) redirect(`/${locale}/login`);
 
   const [module] = await db.select().from(modules).where(eq(modules.id, moduleId));
   if (!module || module.type === "pause" || module.type === "prerequis") {
-    throw new Error("Ce module ne peut pas être marqué comme terminé.");
+    throw new Error("This module cannot be marked as completed.");
   }
 
   const dayModules = await db
@@ -32,7 +34,7 @@ export async function markModuleCompleteAction(moduleId: number) {
   const current = withStatus.find((m) => m.id === moduleId);
 
   if (!current || current.status === "locked") {
-    throw new Error("Ce module est encore verrouillé.");
+    throw new Error("This module is still locked.");
   }
 
   await db
@@ -40,13 +42,14 @@ export async function markModuleCompleteAction(moduleId: number) {
     .values({ userId: session.userId, moduleId })
     .onConflictDoNothing();
 
-  revalidatePath("/dashboard");
-  revalidatePath(`/dashboard/modules/${moduleId}`);
+  revalidatePath(`/${locale}/dashboard`);
+  revalidatePath(`/${locale}/dashboard/modules/${moduleId}`);
 }
 
 export async function unmarkModuleCompleteAction(moduleId: number) {
+  const locale = await getLocale();
   const session = await getSession();
-  if (!session) redirect("/login");
+  if (!session) redirect(`/${locale}/login`);
 
   await db
     .delete(moduleProgress)
@@ -57,6 +60,6 @@ export async function unmarkModuleCompleteAction(moduleId: number) {
       )
     );
 
-  revalidatePath("/dashboard");
-  revalidatePath(`/dashboard/modules/${moduleId}`);
+  revalidatePath(`/${locale}/dashboard`);
+  revalidatePath(`/${locale}/dashboard/modules/${moduleId}`);
 }

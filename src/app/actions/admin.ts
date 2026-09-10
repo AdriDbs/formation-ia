@@ -6,22 +6,24 @@ import { allowedEmails, users } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import { requireAdmin } from "@/lib/auth/guards";
 import { revalidatePath } from "next/cache";
+import { getLocale } from "next-intl/server";
 
 const emailSchema = z.string().trim().toLowerCase().email();
 
-export type AddEmailState = { error?: string } | null;
+export type AddEmailState = { error?: "invalid_email" | "invalid_role" } | null;
 
 export async function addAllowedEmailAction(
   _prevState: AddEmailState,
   formData: FormData
 ): Promise<AddEmailState> {
   const admin = await requireAdmin();
+  const locale = await getLocale();
 
   const email = emailSchema.safeParse(formData.get("email"));
   const role = z.enum(["admin", "participant"]).safeParse(formData.get("role"));
 
-  if (!email.success) return { error: "Adresse e-mail invalide." };
-  if (!role.success) return { error: "Rôle invalide." };
+  if (!email.success) return { error: "invalid_email" };
+  if (!role.success) return { error: "invalid_role" };
 
   await db
     .insert(allowedEmails)
@@ -31,18 +33,20 @@ export async function addAllowedEmailAction(
       set: { role: role.data },
     });
 
-  revalidatePath("/admin/emails");
+  revalidatePath(`/${locale}/admin/emails`);
   return null;
 }
 
 export async function removeAllowedEmailAction(id: number) {
   await requireAdmin();
+  const locale = await getLocale();
   await db.delete(allowedEmails).where(eq(allowedEmails.id, id));
-  revalidatePath("/admin/emails");
+  revalidatePath(`/${locale}/admin/emails`);
 }
 
 export async function updateUserRoleAction(userId: number, role: "admin" | "participant") {
   await requireAdmin();
+  const locale = await getLocale();
   const [user] = await db.select().from(users).where(eq(users.id, userId));
   if (!user) return;
 
@@ -52,6 +56,6 @@ export async function updateUserRoleAction(userId: number, role: "admin" | "part
     .set({ role })
     .where(eq(allowedEmails.email, user.email));
 
-  revalidatePath("/admin");
-  revalidatePath("/admin/emails");
+  revalidatePath(`/${locale}/admin`);
+  revalidatePath(`/${locale}/admin/emails`);
 }
