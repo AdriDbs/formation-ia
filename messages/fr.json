@@ -53,8 +53,6 @@
   },
   "dashboard": {
     "greeting": "Bonjour {name}",
-    "day1": "Jour 1",
-    "day2": "Jour 2",
     "overallProgress": "Progression globale",
     "continueEyebrow": "Reprendre",
     "continueCta": "Continuer",
@@ -78,10 +76,6 @@
     "mastery": {
       "title": "Aller plus loin",
       "description": "Tokens, mémoire et routines"
-    },
-    "day2": {
-      "title": "Jour 2",
-      "description": "Programme personnalisé"
     }
   },
   "module": {
@@ -99,13 +93,19 @@
       "name": "Nom",
       "team": "Équipe",
       "level": "Niveau",
-      "day1": "Jour 1",
-      "day2": "Jour 2",
+      "progress": "Progression",
       "type": "Type",
       "status": "Statut",
       "module": "Module",
       "email": "E-mail",
       "addedBy": "Ajouté par"
+    },
+    "overview": {
+      "title": "Vue d'ensemble",
+      "participantsLabel": "Participants",
+      "avgProgressLabel": "Progression moyenne",
+      "completedLabel": "Formation terminée",
+      "byCategoryTitle": "Progression moyenne par catégorie"
     },
     "emailsTitle": "Accès à la plateforme",
     "emailsSubtitle": "Seules les adresses listées ici peuvent se connecter à la plateforme.",

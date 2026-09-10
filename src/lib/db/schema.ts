@@ -61,7 +61,6 @@ export const adminAccount = pgTable("admin_account", {
 
 export const modules = pgTable("modules", {
   id: serial("id").primaryKey(),
-  day: integer("day").notNull(),
   position: integer("position").notNull(),
   category: varchar("category", { length: 64 }).notNull(),
   title: varchar("title", { length: 255 }).notNull(),

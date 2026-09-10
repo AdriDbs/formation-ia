@@ -53,8 +53,6 @@
   },
   "dashboard": {
     "greeting": "Hello {name}",
-    "day1": "Day 1",
-    "day2": "Day 2",
     "overallProgress": "Overall progress",
     "continueEyebrow": "Resume",
     "continueCta": "Continue",
@@ -78,10 +76,6 @@
     "mastery": {
       "title": "Going further",
       "description": "Tokens, memory and routines"
-    },
-    "day2": {
-      "title": "Day 2",
-      "description": "Custom program"
     }
   },
   "module": {
@@ -99,13 +93,19 @@
       "name": "Name",
       "team": "Team",
       "level": "Level",
-      "day1": "Day 1",
-      "day2": "Day 2",
+      "progress": "Progress",
       "type": "Type",
       "status": "Status",
       "module": "Module",
       "email": "E-mail",
       "addedBy": "Added by"
+    },
+    "overview": {
+      "title": "Overview",
+      "participantsLabel": "Participants",
+      "avgProgressLabel": "Average progress",
+      "completedLabel": "Fully completed",
+      "byCategoryTitle": "Average progress by category"
     },
     "emailsTitle": "Platform access",
     "emailsSubtitle": "Only the addresses listed here can sign in to the platform.",

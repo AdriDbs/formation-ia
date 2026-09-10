@@ -4,7 +4,7 @@ import { db } from "@/lib/db";
 import { modules, moduleProgress } from "@/lib/db/schema";
 import { and, eq } from "drizzle-orm";
 import { getSession } from "@/lib/auth/session";
-import { computeDayStatuses } from "@/lib/modules/progress";
+import { computeModuleStatuses } from "@/lib/modules/progress";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { getLocale } from "next-intl/server";
@@ -19,10 +19,7 @@ export async function markModuleCompleteAction(moduleId: number) {
     throw new Error("This module cannot be marked as completed.");
   }
 
-  const dayModules = await db
-    .select()
-    .from(modules)
-    .where(eq(modules.day, module.day));
+  const allModules = await db.select().from(modules);
 
   const completedRows = await db
     .select({ moduleId: moduleProgress.moduleId })
@@ -30,7 +27,7 @@ export async function markModuleCompleteAction(moduleId: number) {
     .where(eq(moduleProgress.userId, session.userId));
 
   const completedIds = new Set(completedRows.map((r) => r.moduleId));
-  const withStatus = computeDayStatuses(dayModules, completedIds);
+  const withStatus = computeModuleStatuses(allModules, completedIds);
   const current = withStatus.find((m) => m.id === moduleId);
 
   if (!current || current.status === "locked") {

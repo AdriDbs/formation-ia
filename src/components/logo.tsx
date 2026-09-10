@@ -1,22 +1,21 @@
 import { cn } from "@/lib/cn";
 
 /**
- * Monogramme "FI" géométrique, flat, coins droits — décliné en accent rouge
- * sur fond noir ou blanc selon le contexte. Pas d'arrondi, conforme charte.
+ * Badge "B" flat, coins droits, accent rouge en coin — pas d'arrondi,
+ * conforme charte BearingPoint.
  */
 export function LogoMark({ className }: { className?: string }) {
   return (
-    <svg
-      viewBox="0 0 32 32"
-      className={cn("h-8 w-8 shrink-0", className)}
+    <span
+      className={cn(
+        "relative flex h-8 w-8 shrink-0 items-center justify-center bg-ink text-base font-black leading-none text-white",
+        className
+      )}
       aria-hidden="true"
     >
-      <rect width="32" height="32" className="fill-ink" />
-      <rect x="7" y="7" width="6" height="18" className="fill-white" />
-      <rect x="7" y="7" width="14" height="5" className="fill-white" />
-      <rect x="7" y="14.5" width="11" height="5" className="fill-white" />
-      <rect x="21" y="21" width="4" height="4" className="fill-accent" />
-    </svg>
+      B
+      <span className="absolute -bottom-0.5 -right-0.5 h-2 w-2 bg-accent" />
+    </span>
   );
 }
 

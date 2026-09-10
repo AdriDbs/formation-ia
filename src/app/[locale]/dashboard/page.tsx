@@ -2,7 +2,7 @@ import { db } from "@/lib/db";
 import { modules, moduleProgress } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import { requireOnboardedParticipant } from "@/lib/auth/guards";
-import { computeDayStatuses } from "@/lib/modules/progress";
+import { computeModuleStatuses } from "@/lib/modules/progress";
 import { groupByCategory } from "@/lib/modules/categories";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -22,16 +22,9 @@ export default async function DashboardPage() {
     .where(eq(moduleProgress.userId, user.id));
   const completedIds = new Set(completedRows.map((r) => r.moduleId));
 
-  const day1 = computeDayStatuses(
-    allModules.filter((m) => m.day === 1),
-    completedIds
-  );
-  const day2 = computeDayStatuses(
-    allModules.filter((m) => m.day === 2),
-    completedIds
-  );
+  const withStatus = computeModuleStatuses(allModules, completedIds);
 
-  const sequential = [...day1, ...day2].filter(
+  const sequential = withStatus.filter(
     (m) => m.type !== "pause" && m.type !== "prerequis"
   );
   const done = sequential.filter((m) => m.status === "completed").length;
@@ -80,24 +73,10 @@ export default async function DashboardPage() {
         </Card>
       )}
 
-      <div className="flex flex-col gap-12">
-        <div>
-          <h2 className="mb-6 text-xl font-bold">{t("dashboard.day1")}</h2>
-          <div className="flex flex-col gap-10">
-            {groupByCategory(day1).map((group) => (
-              <CategorySection key={group.id} categoryId={group.id} modules={group.modules} />
-            ))}
-          </div>
-        </div>
-
-        <div>
-          <h2 className="mb-6 text-xl font-bold">{t("dashboard.day2")}</h2>
-          <div className="flex flex-col gap-10">
-            {groupByCategory(day2).map((group) => (
-              <CategorySection key={group.id} categoryId={group.id} modules={group.modules} />
-            ))}
-          </div>
-        </div>
+      <div className="flex flex-col gap-10">
+        {groupByCategory(withStatus).map((group) => (
+          <CategorySection key={group.id} categoryId={group.id} modules={group.modules} />
+        ))}
       </div>
     </div>
   );

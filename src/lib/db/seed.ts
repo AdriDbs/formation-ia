@@ -9,8 +9,10 @@ import { hashPassword } from "../auth/password";
 // diffère parfois de l'ID numérique de la colonne "ID" du fichier source).
 // `category` regroupe les modules en unités thématiques pour l'affichage
 // (inspiré des "units" façon Codecademy) — ce n'est pas dans le fichier
-// source, c'est un regroupement éditorial pour la nav / le design.
-const day1 = [
+// source, c'est un regroupement éditorial pour la nav / le design. Le
+// contenu du Jour 2 n'étant pas encore défini, il n'apparaît pas ici : le
+// programme n'est plus scindé en journées, c'est un parcours unique.
+const programme = [
   {
     category: "onboarding",
     type: "prerequis" as const,
@@ -149,40 +151,12 @@ const day1 = [
   },
 ];
 
-const day2 = [
-  { category: "day2", type: "theorique" as const, title: "Intro", description: null },
-  {
-    category: "day2",
-    type: "theorique" as const,
-    title: "Choix des sujets",
-    description: "Agents\nDashboard\n…",
-  },
-  ...Array.from({ length: 18 }, (_, i) => ({
-    category: "day2",
-    type: "theorique" as const,
-    title: `Module à définir ${i + 3}`,
-    description: "Contenu en cours de préparation.",
-  })),
-];
-
 async function seed() {
   console.log("Seeding modules…");
   await db.delete(modules);
 
   await db.insert(modules).values(
-    day1.map((m, i) => ({
-      day: 1,
-      position: i + 1,
-      category: m.category,
-      title: m.title,
-      type: m.type,
-      description: m.description,
-    }))
-  );
-
-  await db.insert(modules).values(
-    day2.map((m, i) => ({
-      day: 2,
+    programme.map((m, i) => ({
       position: i + 1,
       category: m.category,
       title: m.title,

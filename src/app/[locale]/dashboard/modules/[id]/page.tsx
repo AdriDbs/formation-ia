@@ -3,7 +3,7 @@ import { db } from "@/lib/db";
 import { modules, moduleProgress } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import { requireOnboardedParticipant } from "@/lib/auth/guards";
-import { computeDayStatuses } from "@/lib/modules/progress";
+import { computeModuleStatuses } from "@/lib/modules/progress";
 import { Card } from "@/components/ui/card";
 import { StatusPill } from "@/components/ui/status-pill";
 import { Link } from "@/i18n/navigation";
@@ -25,14 +25,14 @@ export default async function ModulePage({
   const [module] = await db.select().from(modules).where(eq(modules.id, moduleId));
   if (!module) notFound();
 
-  const dayModules = await db.select().from(modules).where(eq(modules.day, module.day));
+  const allModules = await db.select().from(modules);
   const completedRows = await db
     .select({ moduleId: moduleProgress.moduleId })
     .from(moduleProgress)
     .where(eq(moduleProgress.userId, user.id));
   const completedIds = new Set(completedRows.map((r) => r.moduleId));
 
-  const withStatus = computeDayStatuses(dayModules, completedIds);
+  const withStatus = computeModuleStatuses(allModules, completedIds);
   const current = withStatus.find((m) => m.id === moduleId)!;
 
   if (current.status === "locked") notFound();
@@ -49,7 +49,7 @@ export default async function ModulePage({
       <Card>
         <div className="mb-4 flex items-center justify-between gap-4">
           <span className="text-xs font-semibold uppercase tracking-wide text-taupe">
-            {t(`dashboard.day${module.day}`)} · {t(`types.${module.type}`)}
+            {t(`categories.${module.category}.title`)} · {t(`types.${module.type}`)}
           </span>
           <StatusPill status={current.status} />
         </div>
