@@ -1,6 +1,6 @@
 import { ParticipantShell } from "@/components/participant-shell";
 
-export default function DashboardLayout({
+export default function ProfileLayout({
   children,
 }: {
   children: React.ReactNode;

@@ -3,16 +3,21 @@
     "brand": "Formation IA",
     "logout": "Déconnexion",
     "backToDashboard": "← Retour au tableau de bord",
-    "backToList": "← Retour à la liste"
+    "backToList": "← Retour à la liste",
+    "save": "Enregistrer",
+    "saving": "Enregistrement…"
   },
   "languageSwitcher": {
     "label": "Langue"
   },
   "nav": {
+    "dashboard": "Tableau de bord",
+    "profile": "Mon profil",
     "adminSpace": "Espace admin",
     "participantView": "Vue participant",
     "participants": "Participants",
-    "access": "Accès"
+    "access": "Accès",
+    "settings": "Réglages"
   },
   "login": {
     "title": "Connexion",
@@ -40,10 +45,44 @@
       "invalid_form": "Formulaire invalide."
     }
   },
+  "profile": {
+    "title": "Mon profil",
+    "subtitle": "Modifiez vos informations à tout moment.",
+    "emailLabel": "Adresse e-mail",
+    "saved": "Profil mis à jour."
+  },
   "dashboard": {
     "greeting": "Bonjour {name}",
     "day1": "Jour 1",
-    "day2": "Jour 2"
+    "day2": "Jour 2",
+    "overallProgress": "Progression globale",
+    "continueEyebrow": "Reprendre",
+    "continueCta": "Continuer",
+    "allDoneTitle": "Bravo, tout est terminé !",
+    "allDoneBody": "Vous avez complété tous les modules disponibles.",
+    "modulesCompleted": "{done} / {total} modules"
+  },
+  "categories": {
+    "onboarding": {
+      "title": "Prise en main",
+      "description": "Environnement, terminal, Git et GitHub"
+    },
+    "claude-code": {
+      "title": "Claude Code & BeMind",
+      "description": "Découverte des outils et des modèles"
+    },
+    "agents": {
+      "title": "Agents & connecteurs",
+      "description": "Créer, connecter et partager des agents"
+    },
+    "mastery": {
+      "title": "Aller plus loin",
+      "description": "Tokens, mémoire et routines"
+    },
+    "day2": {
+      "title": "Jour 2",
+      "description": "Programme personnalisé"
+    }
   },
   "module": {
     "underConstructionTitle": "Contenu en construction",
@@ -66,7 +105,6 @@
       "status": "Statut",
       "module": "Module",
       "email": "E-mail",
-      "role": "Rôle",
       "addedBy": "Ajouté par"
     },
     "emailsTitle": "Accès à la plateforme",
@@ -76,11 +114,34 @@
     "addEmailPending": "Ajout…",
     "remove": "Retirer",
     "removeConfirm": "Retirer cette adresse de la liste des accès autorisés ?",
-    "roleParticipant": "Participant",
-    "roleAdmin": "Administrateur",
     "errors": {
-      "invalid_email": "Adresse e-mail invalide.",
-      "invalid_role": "Rôle invalide."
+      "invalid_email": "Adresse e-mail invalide."
+    }
+  },
+  "adminLogin": {
+    "title": "Espace admin",
+    "subtitle": "Accès réservé — connexion par e-mail et mot de passe.",
+    "emailLabel": "Adresse e-mail",
+    "passwordLabel": "Mot de passe",
+    "submit": "Se connecter",
+    "submitPending": "Connexion…",
+    "errors": {
+      "invalid_credentials": "Identifiants incorrects."
+    }
+  },
+  "adminSettings": {
+    "title": "Réglages",
+    "subtitle": "Changer le mot de passe du compte admin.",
+    "currentPasswordLabel": "Mot de passe actuel",
+    "newPasswordLabel": "Nouveau mot de passe",
+    "confirmPasswordLabel": "Confirmer le nouveau mot de passe",
+    "submit": "Mettre à jour",
+    "submitPending": "Mise à jour…",
+    "success": "Mot de passe mis à jour.",
+    "errors": {
+      "wrong_current": "Mot de passe actuel incorrect.",
+      "too_short": "Le nouveau mot de passe doit faire au moins 8 caractères.",
+      "mismatch": "Les deux mots de passe ne correspondent pas."
     }
   },
   "levels": {

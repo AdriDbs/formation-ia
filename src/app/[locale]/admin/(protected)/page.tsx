@@ -19,7 +19,6 @@ export default async function AdminPage() {
   const day2Modules = allModules.filter((m) => m.day === 2);
 
   const participants = allUsers
-    .filter((u) => u.role === "participant")
     .map((u) => {
       const completedIds = new Set(
         allProgress.filter((p) => p.userId === u.id).map((p) => p.moduleId)

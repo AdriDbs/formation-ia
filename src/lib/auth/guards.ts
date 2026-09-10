@@ -1,7 +1,7 @@
 import "server-only";
 import { redirect } from "next/navigation";
 import { getLocale } from "next-intl/server";
-import { getSession } from "./session";
+import { getSession, getAdminSession } from "./session";
 import { db } from "@/lib/db";
 import { users } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
@@ -26,7 +26,7 @@ export async function requireOnboardedParticipant() {
 
 export async function requireAdmin() {
   const locale = await getLocale();
-  const user = await requireUser();
-  if (user.role !== "admin") redirect(`/${locale}/dashboard`);
-  return user;
+  const session = await getAdminSession();
+  if (!session) redirect(`/${locale}/admin/login`);
+  return session;
 }

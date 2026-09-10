@@ -3,16 +3,21 @@
     "brand": "AI Training",
     "logout": "Log out",
     "backToDashboard": "← Back to dashboard",
-    "backToList": "← Back to list"
+    "backToList": "← Back to list",
+    "save": "Save",
+    "saving": "Saving…"
   },
   "languageSwitcher": {
     "label": "Language"
   },
   "nav": {
+    "dashboard": "Dashboard",
+    "profile": "My profile",
     "adminSpace": "Admin area",
     "participantView": "Participant view",
     "participants": "Participants",
-    "access": "Access"
+    "access": "Access",
+    "settings": "Settings"
   },
   "login": {
     "title": "Sign in",
@@ -40,10 +45,44 @@
       "invalid_form": "Invalid form."
     }
   },
+  "profile": {
+    "title": "My profile",
+    "subtitle": "Update your information any time.",
+    "emailLabel": "E-mail address",
+    "saved": "Profile updated."
+  },
   "dashboard": {
     "greeting": "Hello {name}",
     "day1": "Day 1",
-    "day2": "Day 2"
+    "day2": "Day 2",
+    "overallProgress": "Overall progress",
+    "continueEyebrow": "Resume",
+    "continueCta": "Continue",
+    "allDoneTitle": "Nice work, all done!",
+    "allDoneBody": "You've completed every available module.",
+    "modulesCompleted": "{done} / {total} modules"
+  },
+  "categories": {
+    "onboarding": {
+      "title": "Getting started",
+      "description": "Environment, terminal, Git and GitHub"
+    },
+    "claude-code": {
+      "title": "Claude Code & BeMind",
+      "description": "Getting to know the tools and models"
+    },
+    "agents": {
+      "title": "Agents & connectors",
+      "description": "Build, connect and share agents"
+    },
+    "mastery": {
+      "title": "Going further",
+      "description": "Tokens, memory and routines"
+    },
+    "day2": {
+      "title": "Day 2",
+      "description": "Custom program"
+    }
   },
   "module": {
     "underConstructionTitle": "Content under construction",
@@ -66,7 +105,6 @@
       "status": "Status",
       "module": "Module",
       "email": "E-mail",
-      "role": "Role",
       "addedBy": "Added by"
     },
     "emailsTitle": "Platform access",
@@ -76,11 +114,34 @@
     "addEmailPending": "Adding…",
     "remove": "Remove",
     "removeConfirm": "Remove this address from the list of authorized accounts?",
-    "roleParticipant": "Participant",
-    "roleAdmin": "Administrator",
     "errors": {
-      "invalid_email": "Invalid e-mail address.",
-      "invalid_role": "Invalid role."
+      "invalid_email": "Invalid e-mail address."
+    }
+  },
+  "adminLogin": {
+    "title": "Admin area",
+    "subtitle": "Restricted access — sign in with e-mail and password.",
+    "emailLabel": "E-mail address",
+    "passwordLabel": "Password",
+    "submit": "Sign in",
+    "submitPending": "Signing in…",
+    "errors": {
+      "invalid_credentials": "Incorrect credentials."
+    }
+  },
+  "adminSettings": {
+    "title": "Settings",
+    "subtitle": "Change the admin account password.",
+    "currentPasswordLabel": "Current password",
+    "newPasswordLabel": "New password",
+    "confirmPasswordLabel": "Confirm new password",
+    "submit": "Update",
+    "submitPending": "Updating…",
+    "success": "Password updated.",
+    "errors": {
+      "wrong_current": "Current password is incorrect.",
+      "too_short": "The new password must be at least 8 characters.",
+      "mismatch": "The two passwords don't match."
     }
   },
   "levels": {

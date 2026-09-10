@@ -34,19 +34,10 @@ export async function loginAction(
 
   let [user] = await db.select().from(users).where(eq(users.email, email));
   if (!user) {
-    [user] = await db
-      .insert(users)
-      .values({ email, role: allowed.role })
-      .returning();
-  } else if (user.role !== allowed.role) {
-    [user] = await db
-      .update(users)
-      .set({ role: allowed.role })
-      .where(eq(users.id, user.id))
-      .returning();
+    [user] = await db.insert(users).values({ email }).returning();
   }
 
-  await createSession({ userId: user.id, email: user.email, role: user.role });
+  await createSession({ userId: user.id, email: user.email });
 
   redirect(`/${locale}${user.onboardingComplete ? "/dashboard" : "/onboarding"}`);
 }

@@ -10,7 +10,6 @@ import {
   pgEnum,
 } from "drizzle-orm/pg-core";
 
-export const roleEnum = pgEnum("role", ["admin", "participant"]);
 export const levelEnum = pgEnum("level", [
   "novice",
   "debutant",
@@ -24,12 +23,13 @@ export const moduleTypeEnum = pgEnum("module_type", [
   "pause",
 ]);
 
+// Whitelist des participants autorisés à se connecter (pas de mot de passe :
+// l'admin, unique et distinct, est géré séparément dans `adminAccount`).
 export const allowedEmails = pgTable(
   "allowed_emails",
   {
     id: serial("id").primaryKey(),
     email: varchar("email", { length: 255 }).notNull(),
-    role: roleEnum("role").notNull().default("participant"),
     addedBy: varchar("added_by", { length: 255 }),
     createdAt: timestamp("created_at").notNull().defaultNow(),
   },
@@ -41,7 +41,6 @@ export const users = pgTable(
   {
     id: serial("id").primaryKey(),
     email: varchar("email", { length: 255 }).notNull(),
-    role: roleEnum("role").notNull().default("participant"),
     name: varchar("name", { length: 255 }),
     team: varchar("team", { length: 255 }),
     level: levelEnum("level"),
@@ -51,10 +50,20 @@ export const users = pgTable(
   (table) => [uniqueIndex("users_email_idx").on(table.email)]
 );
 
+// Compte admin unique et global (pas de whitelist, pas de rôles) : e-mail +
+// mot de passe hashé. Une seule ligne existe jamais dans cette table.
+export const adminAccount = pgTable("admin_account", {
+  id: serial("id").primaryKey(),
+  email: varchar("email", { length: 255 }).notNull(),
+  passwordHash: text("password_hash").notNull(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+});
+
 export const modules = pgTable("modules", {
   id: serial("id").primaryKey(),
   day: integer("day").notNull(),
   position: integer("position").notNull(),
+  category: varchar("category", { length: 64 }).notNull(),
   title: varchar("title", { length: 255 }).notNull(),
   type: moduleTypeEnum("type").notNull(),
   description: text("description"),

@@ -27,18 +27,25 @@ Variables d'environnement : voir [.env.local.example](.env.local.example).
 
 ## Accès et sécurité
 
-Il n'y a pas de mot de passe : un administrateur ajoute une adresse e-mail
-dans `/admin/emails` (avec un rôle `participant` ou `admin`), et toute
-personne qui saisit cette adresse sur `/login` est connectée directement.
-La sécurité de la plateforme repose donc entièrement sur la maîtrise de la
-liste des adresses autorisées — ne whitelister que des adresses de
-confiance.
+Deux systèmes d'accès complètement séparés, avec leur propre cookie de
+session :
+
+- **Participants** : pas de mot de passe. Un admin ajoute une adresse e-mail
+  dans `/admin/emails`, et toute personne qui saisit cette adresse sur
+  `/login` est connectée directement. La sécurité repose donc entièrement sur
+  la maîtrise de la liste des adresses autorisées.
+- **Admin** : un compte unique et global (table `admin_account`, une seule
+  ligne), protégé par e-mail + mot de passe sur `/admin/login`. Le mot de
+  passe se change depuis `/admin/settings`. `npm run db:seed` crée ce compte
+  au premier lancement et affiche un mot de passe temporaire dans la console
+  — à changer immédiatement.
 
 ## Modèle
 
-- `allowed_emails` — whitelist des adresses autorisées à se connecter, gérée depuis `/admin/emails`
-- `users` — profil (nom, équipe, niveau), rôle `admin` ou `participant`
-- `modules` — contenu des deux journées de formation (voir `src/lib/db/seed.ts`)
+- `allowed_emails` — whitelist des adresses participantes autorisées à se connecter, gérée depuis `/admin/emails`
+- `users` — profils participants (nom, équipe, niveau)
+- `admin_account` — compte admin unique (e-mail + mot de passe hashé)
+- `modules` — contenu des deux journées de formation, regroupé par `category` (voir `src/lib/db/seed.ts`)
 - `module_progress` — modules marqués comme terminés par chaque participant
 
 La progression (verrouillé / disponible / terminé) est calculée à la volée
@@ -62,7 +69,7 @@ français pour l'instant.
 | `npm run build` | Build de production |
 | `npm run db:push` | Applique `src/lib/db/schema.ts` sur la base |
 | `npm run db:studio` | Interface Drizzle Studio pour inspecter la base |
-| `npm run db:seed` | Charge les modules + whitelist le premier compte admin |
+| `npm run db:seed` | Charge les modules + crée le compte admin (mot de passe affiché en console) |
 
 ## Déploiement
 

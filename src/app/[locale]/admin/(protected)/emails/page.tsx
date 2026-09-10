@@ -20,7 +20,7 @@ export default async function EmailsPage() {
         <p className="text-sm text-muted">{t("admin.emailsSubtitle")}</p>
       </div>
 
-      <Card className="max-w-md">
+      <Card className="max-w-xl">
         <h2 className="mb-4 text-sm font-bold uppercase tracking-wide">
           {t("admin.addEmailTitle")}
         </h2>
@@ -32,7 +32,6 @@ export default async function EmailsPage() {
           <thead>
             <tr className="border-b border-border text-xs font-semibold uppercase tracking-wide text-muted">
               <th className="px-6 py-3">{t("admin.table.email")}</th>
-              <th className="px-6 py-3">{t("admin.table.role")}</th>
               <th className="px-6 py-3">{t("admin.table.addedBy")}</th>
               <th className="px-6 py-3" />
             </tr>
@@ -41,11 +40,6 @@ export default async function EmailsPage() {
             {entries.map((entry) => (
               <tr key={entry.id} className="border-b border-border last:border-0">
                 <td className="px-6 py-3 font-medium">{entry.email}</td>
-                <td className="px-6 py-3">
-                  <span className="inline-flex items-center rounded-[var(--radius-pill)] border border-border px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide text-muted">
-                    {entry.role === "admin" ? t("admin.roleAdmin") : t("admin.roleParticipant")}
-                  </span>
-                </td>
                 <td className="px-6 py-3 text-muted">{entry.addedBy ?? "—"}</td>
                 <td className="px-6 py-3 text-right">
                   <RemoveEmailButton id={entry.id} />
